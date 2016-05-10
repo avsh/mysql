@@ -32,6 +32,10 @@ mysql_service 'instance-1' do
   data_dir '/data/instance-1'
   run_user 'alice'
   run_group 'alice'
+  mysqld_options ({
+    'innodb_log_file_size' => '10M',
+    'innodb_flush_method' => 'O_DIRECT'
+  })
   action [:create, :start]
 end
 
@@ -44,5 +48,9 @@ mysql_service 'instance-2' do
   run_user node['mysql']['run_user']
   run_group node['mysql']['run_group']
   initial_root_password node['mysql']['initial_root_password']
+  mysqld_options ({
+    'innodb_log_file_size' => '5M',
+    'innodb_flush_method' => 'O_DIRECT'
+  })
   action [:create, :start]
 end
